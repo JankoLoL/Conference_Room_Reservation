@@ -17,10 +17,9 @@ class AddRoomView(View):
     def get(self, request):
         return render(request, "add-room.html")
 
-
     def post(self, request):
         name = request.POST.get("room-name")
-        capacity = request.POST.get("room-capacity")
+        capacity = request.POST.get("capacity")
         capacity = int(capacity) if capacity else 0
         projector = request.POST.get("projector") == "on"
 
@@ -33,3 +32,9 @@ class AddRoomView(View):
 
         ConferenceRoom.objects.create(name=name, capacity=capacity, projector_availability=projector)
         return redirect("rooms-list")
+
+
+class RoomListView(View):
+    def get(self, request):
+        rooms = ConferenceRoom.objects.all()
+        return render(request, "rooms.html", context={"rooms": rooms})
