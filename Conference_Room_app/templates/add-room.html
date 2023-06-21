@@ -1,0 +1,48 @@
+{% extends '__base__.html' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block title %} Add room{% endblock %}
+</head>
+<body>
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="room-name">Nazwa sali</label>
+                    <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help"
+                           placeholder="Nazwa sali" name="room-name">
+                    <small id="room-name-help" class="form-text text-muted">Nazwa sali musi być unikatowa.</small>
+                </div>
+                <div class="form-group">
+                    <label for="capacity">Pojemność sali</label>
+                    <input type="number" step="1" class="form-control" id="capacity" placeholder="10" name="capacity">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="projector" id="projector">
+                    <label class="form-check-label" for="projector">Dostępność rzutnika</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Dodaj salę</button>
+            </form>
+        </div>
+    </div>
+    {% if error %}
+        <!-- Form error -->
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <!-- Form error -->
+    {% endif %}
+{% endblock %}
+
+</body>
+</html>
