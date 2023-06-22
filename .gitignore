@@ -1,7 +1,7 @@
 .idea/
 /bin
 lib
-pyvenv.cfg
+.pyvenv.cfg
 
 ### Django ###
 *.log

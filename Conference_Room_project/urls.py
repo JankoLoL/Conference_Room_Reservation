@@ -17,13 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from Conference_Room_app.views import MainView, AddRoomView, RoomsListView, DeleteRoomView, EditRoomView
+from Conference_Room_app.views import MainView, AddRoomView, RoomsListView, DeleteRoomView, EditRoomView, \
+    ReservationView, RoomDetailsView, SearchView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', MainView.as_view(), name='index'),
+    path('', RoomsListView.as_view(), name='room-list'),
     path('room/new/', AddRoomView.as_view(), name='add-room'),
     path('rooms/', RoomsListView.as_view(), name='rooms-list'),
     path('room/delete/<int:room_id>/', DeleteRoomView.as_view(), name='delete-room'),
     path('room/edit/<int:room_id>/', EditRoomView.as_view(), name='edit-room'),
+    path('room/reserve/<int:room_id>/', ReservationView.as_view(), name='reserve-room'),
+    path('room/<int:room_id>/', RoomDetailsView.as_view(), name="room"),
+    path('search/', SearchView.as_view(), name="room-list"),
 ]
