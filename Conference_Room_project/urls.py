@@ -22,12 +22,12 @@ from Conference_Room_app.views import MainView, AddRoomView, RoomsListView, Dele
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RoomsListView.as_view(), name='room-list'),
+    path('', MainView.as_view(), name='index'),
     path('room/new/', AddRoomView.as_view(), name='add-room'),
     path('rooms/', RoomsListView.as_view(), name='rooms-list'),
     path('room/delete/<int:room_id>/', DeleteRoomView.as_view(), name='delete-room'),
     path('room/edit/<int:room_id>/', EditRoomView.as_view(), name='edit-room'),
     path('room/reserve/<int:room_id>/', ReservationView.as_view(), name='reserve-room'),
     path('room/<int:room_id>/', RoomDetailsView.as_view(), name="room"),
-    path('search/', SearchView.as_view(), name="room-list"),
+    path('search/', SearchView.as_view(), name="search"),
 ]

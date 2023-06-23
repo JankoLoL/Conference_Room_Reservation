@@ -1,0 +1,38 @@
+{% extends '__base__.html' %}
+<!doctype html>
+<html lang="en">
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+    <body>
+    <div class="card">
+        <div class="card-body">
+            <form action="/search/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="room-name">Room name</label>
+                    <input type="text" class="form-control" id="room-name" aria-describedby="room-name-help"
+                           placeholder="Nazwa sali" name="room-name">
+                </div>
+                <div class="form-group">
+                    <label for="capacity">Minimum room capacity</label>
+                    <input type="number" step="1" class="form-control" id="capacity" placeholder="10" value="10"
+                           name="capacity">
+                </div>
+                <div class="form-group">
+                    <label for="date">Date available</label>
+                    <input type="date" class="form-control" id="date" name="date">
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="projector" id="projector">
+                    <label class="form-check-label" for="projector">Projector availability</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    </body>
+{% endblock content %}
+</html>

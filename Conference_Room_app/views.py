@@ -8,7 +8,10 @@ from Conference_Room_app.models import ConferenceRoom, RoomReservation
 class MainView(View):
 
     def get(self, request):
-        return render(request, "index.html")
+        current_date = datetime.date.today()
+        reservations = RoomReservation.objects.filter(date=current_date)
+        available_rooms = ConferenceRoom.objects.exclude(id__in=reservations.values('room_id'))
+        return render(request, "index.html", {'available_rooms': available_rooms})
 
 
 class AddRoomView(View):
@@ -106,11 +109,14 @@ class RoomDetailsView(View):
 
 
 class SearchView(View):
+
     def get(self, request):
-        name = request.GET.get("room-name")
-        capacity = request.GET.get("capacity")
+        return render(request, "search.html")
+    def post(self, request):
+        name = request.POST.get("room-name")
+        capacity = request.POST.get("capacity")
         capacity = int(capacity) if capacity else 0
-        projector = request.GET.get("projector") == "on"
+        projector = request.POST.get("projector") == "on"
 
         rooms = ConferenceRoom.objects.all()
         if projector:

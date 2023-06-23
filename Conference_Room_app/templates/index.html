@@ -1,20 +1,48 @@
 {% extends '__base__.html' %}
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% block title %} Home Page {% endblock %}
-</head>
-<body>
+
+{% block title %} Home Page {% endblock %}
+
 {% block content %}
+<div class="container content">
+    <h1 style="text-align: center;">Welcome!</h1>
+    <h3 style="text-align: center;">Below you can see available rooms for today</h3>
+    <h6 style="text-align: center;">or you can choose full list with button above</h6>
 
-
-
-
+    <table class="table">
+        <thead>
+            <tr class="d-flex">
+                <th scope="col" class="col-1">Room number</th>
+                <th scope="col" class="col-2">Name</th>
+                <th scope="col" class="col-1">Capacity</th>
+                <th scope="col" class="col-2">Availability</th>
+                <th scope="col" class="col-5" colspan="4">Projector availability</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in available_rooms %}
+                <tr class="d-flex">
+                    <th scope="row" class="col-1">{{ room.id }}</th>
+                    <td class="col-2">
+                        <a href="/room/{{ room.id }}/">{{ room.name }}</a>
+                    </td>
+                    <td class="col-1">{{ room.capacity }}</td>
+                    {% if room.reserved %}
+                        <td class="col-2" style="color:red;">Already reserved</td>
+                    {% else %}
+                        <td class="col-2" style="color:green;">It is available</td>
+                    {% endif %}
+                    {% if room.projector_availability %}
+                        <td class="col-2" style="color:green;">&#9745;</td>
+                    {% else %}
+                        <td class="col-2" style="color:red;">&#9746;</td>
+                    {% endif %}
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No available rooms</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
-
-</body>
-</html>
