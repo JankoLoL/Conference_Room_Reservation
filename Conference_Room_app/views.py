@@ -117,6 +117,7 @@ class SearchView(View):
         capacity = request.POST.get("capacity")
         capacity = int(capacity) if capacity else 0
         projector = request.POST.get("projector") == "on"
+        reservation_date = request.POST.get("date")
 
         rooms = ConferenceRoom.objects.all()
         if projector:
@@ -124,10 +125,8 @@ class SearchView(View):
         if capacity:
             rooms = rooms.filter(capacity__gte=capacity)
         if name:
-            rooms.filter(name__contains=name)
-
-        for room in rooms:
-            reservation_dates = [reservation.date for reservation in room.roomreservation_set.all()]
-            room.reserved = str(datetime.date.today()) in reservation_dates
+            rooms = rooms.filter(name__contains=name)
+        if reservation_date:
+            rooms = rooms.exclude(roomreservation__date=reservation_date)
 
         return render(request, "rooms.html", context={"rooms": rooms, "date": datetime.date.today()})
